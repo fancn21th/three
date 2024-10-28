@@ -45,11 +45,19 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(sizes.width, sizes.height);
 
+let time = Date.now();
+
 // animation
 const tick = () => {
-  // update objects
-  group.rotation.y += 0.01;
-  group.rotation.x += 0.01;
+  const currentTime = Date.now();
+  const deltaTime = currentTime - time;
+  time = currentTime;
+
+  console.log(deltaTime);
+
+  // update objects @ the same speed
+  group.rotation.y += 0.001 * deltaTime;
+  group.rotation.x += 0.001 * deltaTime;
 
   // render
   renderer.render(scene, camera);
