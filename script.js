@@ -18,22 +18,7 @@ const cube1 = new THREE.Mesh(
   new THREE.MeshBasicMaterial({ color: 0xff0000 })
 );
 
-const cube2 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0x00ff00 })
-);
-
-const cube3 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: 0x0000ff })
-);
-
-cube2.position.x = -2;
-cube3.position.x = 2;
-
 group.add(cube1);
-group.add(cube2);
-group.add(cube3);
 
 // axes helper
 const axesHelper = new THREE.AxesHelper(2);
@@ -60,5 +45,17 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(sizes.width, sizes.height);
 
-// by default the camera is inside the cube, so we need to move it back as line 27
-renderer.render(scene, camera);
+// animation
+const tick = () => {
+  // update objects
+  group.rotation.y += 0.01;
+  group.rotation.x += 0.01;
+
+  // render
+  renderer.render(scene, camera);
+
+  // call tick again on the next frame
+  window.requestAnimationFrame(tick);
+};
+
+tick();
