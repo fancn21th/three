@@ -51,6 +51,8 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 
 camera.position.set(1, 1, 3);
 
+camera.lookAt(mesh.position);
+
 scene.add(camera);
 
 console.log(mesh.position.distanceTo(camera.position));
