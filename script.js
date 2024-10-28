@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import gsap from "gsap";
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -45,20 +46,18 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(sizes.width, sizes.height);
 
-const clock = new THREE.Clock();
+// const clock = new THREE.Clock();
+
+gsap.to(group.position, {
+  duration: 1,
+  delay: 1,
+  y: 2,
+  ease: "power1.inOut",
+});
 
 // animation
 const tick = () => {
-  // clock
-  const elapsedTime = clock.getElapsedTime();
-
-  console.log(elapsedTime);
-
-  // update objects @ the same speed
-  group.position.y = Math.sin(elapsedTime);
-  group.position.x = Math.cos(elapsedTime);
-
-  // render
+  // // render
   renderer.render(scene, camera);
 
   // call tick again on the next frame
