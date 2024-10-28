@@ -23,6 +23,12 @@ mesh.position.set(0.7, -0.6, -1);
 
 mesh.scale.set(2, 0.5, 0.5);
 
+// rotation will change in order of x, y, z
+mesh.rotation.reorder("YXZ");
+mesh.rotation.x = Math.PI / 4;
+mesh.rotation.y = Math.PI / 4;
+mesh.rotation.z = Math.PI / 4;
+
 console.log(mesh.position.length());
 // add mesh to scene
 scene.add(mesh);
