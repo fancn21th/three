@@ -12,8 +12,10 @@ const scene = new THREE.Scene();
 // geometry object
 const geometry = new THREE.BufferGeometry();
 
-const count = 500;
+// count of triangles
+const count = 1;
 
+// each triangle has 3 vertices
 const positionsArray = new Float32Array(count * 3 * 3);
 
 for (let i = 0; i < count * 3 * 3; i++) {
