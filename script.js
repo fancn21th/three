@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -46,6 +47,9 @@ camera.lookAt(mesh.position);
 
 scene.add(camera);
 
+// controls
+const controls = new OrbitControls(camera, canvas);
+
 // renderer
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -54,16 +58,16 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setSize(sizes.width, sizes.height);
 
 // mouse
-const cursor = {
-  x: 0,
-  y: 0,
-};
+// const cursor = {
+//   x: 0,
+//   y: 0,
+// };
 
-window.addEventListener("mousemove", (event) => {
-  cursor.x = event.clientX / sizes.width - 0.5;
-  cursor.y = -(event.clientY / sizes.height - 0.5);
-  console.log(cursor);
-});
+// window.addEventListener("mousemove", (event) => {
+//   cursor.x = event.clientX / sizes.width - 0.5;
+//   cursor.y = -(event.clientY / sizes.height - 0.5);
+//   console.log(cursor);
+// });
 
 // animation
 const clock = new THREE.Clock();
@@ -73,11 +77,11 @@ const tick = () => {
 
   // update objects
   // mesh.rotation.y = elapsedTime;
-  camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
-  camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
-  camera.position.y = cursor.y * 5;
+  // camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
+  // camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
+  // camera.position.y = cursor.y * 5;
 
-  camera.lookAt(mesh.position);
+  // camera.lookAt(mesh.position);
 
   // render
   renderer.render(scene, camera);
