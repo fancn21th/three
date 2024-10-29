@@ -39,6 +39,8 @@ window.addEventListener("resize", () => {
 
   // update renderer
   renderer.setSize(sizes.width, sizes.height);
+  // moving from one device to another
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 });
 
 // 45 - 75 is recommended for perspective camera
