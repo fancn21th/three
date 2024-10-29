@@ -12,19 +12,13 @@ const scene = new THREE.Scene();
 // geometry object
 const geometry = new THREE.BufferGeometry();
 
-const positionsArray = new Float32Array(9);
-//x, y, z
-positionsArray[0] = 0;
-positionsArray[1] = 0;
-positionsArray[2] = 0;
+const count = 500;
 
-positionsArray[3] = 0;
-positionsArray[4] = 1;
-positionsArray[5] = 0;
+const positionsArray = new Float32Array(count * 3 * 3);
 
-positionsArray[6] = 1;
-positionsArray[7] = 0;
-positionsArray[8] = 0;
+for (let i = 0; i < count * 3 * 3; i++) {
+  positionsArray[i] = Math.random() - 0.5;
+}
 
 const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
 // for shader
