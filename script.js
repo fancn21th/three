@@ -1,3 +1,4 @@
+import "./index.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
@@ -23,9 +24,22 @@ scene.add(axesHelper);
 
 //  size config
 const sizes = {
-  width: 800,
-  height: 600,
+  width: window.innerWidth,
+  height: window.innerHeight,
 };
+
+window.addEventListener("resize", () => {
+  // update sizes
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+
+  // update camera
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+
+  // update renderer
+  renderer.setSize(sizes.width, sizes.height);
+});
 
 // 45 - 75 is recommended for perspective camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
