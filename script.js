@@ -1,7 +1,6 @@
 import "./index.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { Wireframe } from "three/examples/jsm/Addons.js";
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -13,7 +12,7 @@ const scene = new THREE.Scene();
 const geometry = new THREE.BufferGeometry();
 
 // count of triangles
-const count = 1;
+const count = 1000;
 
 // each triangle has 3 vertices
 const positionsArray = new Float32Array(count * 3 * 3);
