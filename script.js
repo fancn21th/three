@@ -1,6 +1,7 @@
 import "./index.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { Wireframe } from "three/examples/jsm/Addons.js";
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -8,13 +9,41 @@ const canvas = document.querySelector("canvas.webgl");
 // scene
 const scene = new THREE.Scene();
 
-// objects
+// geometry object
+const geometry = new THREE.BufferGeometry();
+
+const positionsArray = new Float32Array(9);
+//x, y, z
+positionsArray[0] = 0;
+positionsArray[1] = 0;
+positionsArray[2] = 0;
+
+positionsArray[3] = 0;
+positionsArray[4] = 1;
+positionsArray[5] = 0;
+
+positionsArray[6] = 1;
+positionsArray[7] = 0;
+positionsArray[8] = 0;
+
+const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
+// for shader
+geometry.setAttribute("position", positionsAttribute);
+
 const mesh = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
-  new THREE.MeshBasicMaterial({ color: 0xff0000 })
+  geometry,
+  new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
 );
 
 scene.add(mesh);
+
+// objects
+// const mesh = new THREE.Mesh(
+//   new THREE.BoxGeometry(1, 1, 1, 2, 2, 2),
+//   new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
+// );
+
+// scene.add(mesh);
 
 // axes helper
 const axesHelper = new THREE.AxesHelper(2);
