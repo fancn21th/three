@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import gsap from "gsap";
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -8,18 +7,12 @@ const canvas = document.querySelector("canvas.webgl");
 const scene = new THREE.Scene();
 
 // objects
-const group = new THREE.Group();
-
-group.position.y = 1;
-
-scene.add(group);
-
-const cube1 = new THREE.Mesh(
-  new THREE.BoxGeometry(1, 1, 1),
+const mesh = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1, 5, 5, 5),
   new THREE.MeshBasicMaterial({ color: 0xff0000 })
 );
 
-group.add(cube1);
+scene.add(mesh);
 
 // axes helper
 const axesHelper = new THREE.AxesHelper(2);
@@ -35,7 +28,8 @@ const sizes = {
 
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
 
-camera.position.set(-1, 1, 3);
+camera.position.set(2, 2, 2);
+camera.lookAt(mesh.position);
 
 scene.add(camera);
 
@@ -46,18 +40,16 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(sizes.width, sizes.height);
 
-// const clock = new THREE.Clock();
-
-gsap.to(group.position, {
-  duration: 1,
-  delay: 1,
-  y: 2,
-  ease: "power1.inOut",
-});
-
 // animation
+const clock = new THREE.Clock();
+
 const tick = () => {
-  // // render
+  const elapsedTime = clock.getElapsedTime();
+
+  // update objects
+  mesh.rotation.y = elapsedTime;
+
+  // render
   renderer.render(scene, camera);
 
   // call tick again on the next frame
