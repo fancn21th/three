@@ -2,9 +2,11 @@ import "./index.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import GUI from "lil-gui";
+import gsap from "gsap";
 
-// debug
+// debugger
 const gui = new GUI();
+const debugObject = {};
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -12,11 +14,11 @@ const canvas = document.querySelector("canvas.webgl");
 // scene
 const scene = new THREE.Scene();
 
-// geometry object
 const geometry = new THREE.BufferGeometry();
 
+// vertex objects
 // count of triangles
-const count = 1000;
+const count = 100;
 
 // each triangle has 3 vertices
 const positionsArray = new Float32Array(count * 3 * 3);
@@ -29,20 +31,66 @@ const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
 // for shader
 geometry.setAttribute("position", positionsAttribute);
 
+// geometry object and its properties
+debugObject.color = "#00ff00";
+
 const material = new THREE.MeshBasicMaterial({
-  color: 0xff0000,
+  color: debugObject.color,
   wireframe: true,
 });
 
-const mesh = new THREE.Mesh(geometry, material);
+const triangles = new THREE.Mesh(geometry, material);
 
-scene.add(mesh);
+scene.add(triangles);
 
 // debug in range
-gui.add(mesh.position, "y").min(-3).max(3).step(0.01).name("y");
+gui.add(triangles.position, "y").min(-3).max(3).step(0.01).name("y");
 
-// debug
+// debug boolean
 gui.add(material, "wireframe");
+
+// debug object
+gui.addColor(material, "color").onChange((value) => {
+  // print the color value for three.js color management
+  console.log(value.getHexString());
+  debugObject.color = value.getHexString();
+  material.color.set(debugObject.color);
+});
+
+debugObject.spin = () => {
+  gsap.to(triangles.rotation, { y: triangles.rotation.y + Math.PI * 2 });
+};
+
+gui.add(debugObject, "spin");
+
+// another geometry box
+debugObject.subdivision = 6;
+
+const box = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.MeshBasicMaterial({ color: debugObject.color, wireframe: true })
+);
+
+box.position.x = 2;
+scene.add(box);
+
+gui
+  .add(debugObject, "subdivision")
+  .min(1)
+  .max(20)
+  .step(1)
+  // like throttle
+  .onFinishChange(() => {
+    box.geometry.dispose();
+    box.geometry = new THREE.BoxGeometry(
+      1,
+      1,
+      1,
+      debugObject.subdivision,
+      debugObject.subdivision,
+      debugObject.subdivision
+    );
+  });
 
 // objects
 // const mesh = new THREE.Mesh(
@@ -114,7 +162,7 @@ camera.position.z = 3;
 
 // camera.position.set(2, 2, 2);
 
-camera.lookAt(mesh.position);
+camera.lookAt(triangles.position);
 
 scene.add(camera);
 
