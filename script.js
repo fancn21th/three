@@ -7,6 +7,7 @@ import gsap from "gsap";
 // debugger
 const gui = new GUI();
 const debugObject = {};
+const cubeTweaks = gui.addFolder("Awesome Threejs");
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -44,13 +45,13 @@ const triangles = new THREE.Mesh(geometry, material);
 scene.add(triangles);
 
 // debug in range
-gui.add(triangles.position, "y").min(-3).max(3).step(0.01).name("y");
+cubeTweaks.add(triangles.position, "y").min(-3).max(3).step(0.01).name("y");
 
 // debug boolean
-gui.add(material, "wireframe");
+cubeTweaks.add(material, "wireframe");
 
 // debug object
-gui.addColor(material, "color").onChange((value) => {
+cubeTweaks.addColor(material, "color").onChange((value) => {
   // print the color value for three.js color management
   console.log(value.getHexString());
   debugObject.color = value.getHexString();
@@ -61,7 +62,7 @@ debugObject.spin = () => {
   gsap.to(triangles.rotation, { y: triangles.rotation.y + Math.PI * 2 });
 };
 
-gui.add(debugObject, "spin");
+cubeTweaks.add(debugObject, "spin");
 
 // another geometry box
 debugObject.subdivision = 6;
@@ -74,7 +75,7 @@ const box = new THREE.Mesh(
 box.position.x = 2;
 scene.add(box);
 
-gui
+cubeTweaks
   .add(debugObject, "subdivision")
   .min(1)
   .max(20)
