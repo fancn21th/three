@@ -5,7 +5,18 @@ import GUI from "lil-gui";
 import gsap from "gsap";
 
 // debugger
-const gui = new GUI();
+const gui = new GUI({
+  title: "debugger panel",
+  closeFolders: true,
+  close,
+});
+
+window.addEventListener("keydown", (event) => {
+  if (event.key === "h") {
+    gui.show(gui._hidden);
+  }
+});
+
 const debugObject = {};
 const cubeTweaks = gui.addFolder("Awesome Threejs");
 
