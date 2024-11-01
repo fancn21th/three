@@ -11,7 +11,8 @@
   "author": "fancn21th <fancn21th@aliyun.com> (http://fancn21th.cn/)",
   "license": "MIT",
   "devDependencies": {
-    "vite": "5.4.10"
+    "vite": "5.4.10",
+    "vite-plugin-restart": "0.4.1"
   },
   "dependencies": {
     "gsap": "3.12.5",

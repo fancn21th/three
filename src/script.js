@@ -20,6 +20,17 @@ window.addEventListener("keydown", (event) => {
 const debugObject = {};
 const cubeTweaks = gui.addFolder("Awesome Threejs");
 
+// textures
+const image = new Image();
+const texture = new THREE.Texture(image);
+texture.colorSpace = THREE.SRGBColorSpace;
+
+image.onload = () => {
+  texture.needsUpdate = true;
+};
+
+image.src = "/textures/door/color.jpg";
+
 // canvas
 const canvas = document.querySelector("canvas.webgl");
 
@@ -80,7 +91,7 @@ debugObject.subdivision = 6;
 
 const box = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ color: debugObject.color, wireframe: true })
+  new THREE.MeshBasicMaterial({ map: texture })
 );
 
 box.position.x = 2;
