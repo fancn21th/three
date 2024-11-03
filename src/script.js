@@ -21,15 +21,24 @@ const debugObject = {};
 const cubeTweaks = gui.addFolder("Awesome Threejs");
 
 // textures
-const image = new Image();
-const texture = new THREE.Texture(image);
-texture.colorSpace = THREE.SRGBColorSpace;
+const loadingManager = new THREE.LoadingManager();
 
-image.onload = () => {
-  texture.needsUpdate = true;
+loadingManager.onStart = () => {
+  console.log("onStart");
+};
+loadingManager.onLoad = () => {
+  console.log("onLoad");
+};
+loadingManager.onProgress = () => {
+  console.log("onProgress");
+};
+loadingManager.onError = () => {
+  console.log("onError");
 };
 
-image.src = "/textures/door/color.jpg";
+const textureLoader = new THREE.TextureLoader(loadingManager);
+const texture = textureLoader.load("/textures/door/color.jpg");
+texture.colorSpace = THREE.SRGBColorSpace;
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -114,14 +123,6 @@ cubeTweaks
       debugObject.subdivision
     );
   });
-
-// objects
-// const mesh = new THREE.Mesh(
-//   new THREE.BoxGeometry(1, 1, 1, 2, 2, 2),
-//   new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
-// );
-
-// scene.add(mesh);
 
 // axes helper
 const axesHelper = new THREE.AxesHelper(2);
