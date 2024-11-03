@@ -5,7 +5,7 @@ import GUI from "lil-gui";
 import gsap from "gsap";
 
 // debugger
-const gui = new GUI({
+const debuggerGUI = new GUI({
   title: "debugger panel",
   closeFolders: true,
   close,
@@ -13,34 +13,48 @@ const gui = new GUI({
 
 window.addEventListener("keydown", (event) => {
   if (event.key === "h") {
-    gui.show(gui._hidden);
+    debuggerGUI.show(debuggerGUI._hidden);
   }
 });
 
 const debugObject = {};
-const cubeTweaks = gui.addFolder("Awesome Threejs");
+const cubeTweaks = debuggerGUI.addFolder("Awesome Threejs");
 
 // textures
 
 // texture loader
 const loadingManager = new THREE.LoadingManager();
 
-loadingManager.onStart = () => {
-  console.log("onStart");
-};
-loadingManager.onLoad = () => {
-  console.log("onLoad");
-};
-loadingManager.onProgress = () => {
-  console.log("onProgress");
-};
-loadingManager.onError = () => {
-  console.log("onError");
-};
+// loadingManager.onStart = () => {
+//   console.log("onStart");
+// };
+// loadingManager.onLoad = () => {
+//   console.log("onLoad");
+// };
+// loadingManager.onProgress = () => {
+//   console.log("onProgress");
+// };
+// loadingManager.onError = () => {
+//   console.log("onError");
+// };
 
 const textureLoader = new THREE.TextureLoader(loadingManager);
-const texture = textureLoader.load("/textures/door/color.jpg");
-texture.colorSpace = THREE.SRGBColorSpace;
+
+const colorTexture = textureLoader.load("/textures/door/color.jpg");
+
+colorTexture.colorSpace = THREE.SRGBColorSpace;
+
+// colorTexture.repeat.x = 2;
+// colorTexture.repeat.y = 3;
+// colorTexture.wrapS = THREE.RepeatWrapping;
+// colorTexture.wrapT = THREE.RepeatWrapping;
+
+// colorTexture.offset.x = 0.5;
+// colorTexture.offset.y = 0.5;
+
+colorTexture.center.x = 0.5;
+colorTexture.center.y = 0.5;
+colorTexture.rotation = Math.PI * 0.25;
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
@@ -48,7 +62,7 @@ const canvas = document.querySelector("canvas.webgl");
 // scene
 const scene = new THREE.Scene();
 
-const geometry = new THREE.BufferGeometry();
+// const geometry = new THREE.BufferGeometry();
 
 // vertex objects
 // count of triangles
@@ -103,7 +117,8 @@ debugObject.subdivision = 6;
 
 const box = new THREE.Mesh(
   new THREE.BoxGeometry(1, 1, 1),
-  new THREE.MeshBasicMaterial({ map: texture })
+  new THREE.MeshBasicMaterial({ map: colorTexture })
+  // new THREE.MeshBasicMaterial({ color: 0xff0000, wireframe: true })
 );
 
 box.position.x = 0;
