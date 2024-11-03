@@ -40,7 +40,9 @@ const loadingManager = new THREE.LoadingManager();
 
 const textureLoader = new THREE.TextureLoader(loadingManager);
 
-const colorTexture = textureLoader.load("/textures/door/color.jpg");
+// const colorTexture = textureLoader.load("/textures/door/color.jpg");
+
+const colorTexture = textureLoader.load("/textures/checkerboard-8x8.png");
 
 colorTexture.colorSpace = THREE.SRGBColorSpace;
 
@@ -52,9 +54,14 @@ colorTexture.colorSpace = THREE.SRGBColorSpace;
 // colorTexture.offset.x = 0.5;
 // colorTexture.offset.y = 0.5;
 
-colorTexture.center.x = 0.5;
-colorTexture.center.y = 0.5;
-colorTexture.rotation = Math.PI * 0.25;
+// colorTexture.center.x = 0.5;
+// colorTexture.center.y = 0.5;
+// colorTexture.rotation = Math.PI * 0.25;
+
+// if you are using nearest filter, you should not use mipmaps, so you can disable it
+colorTexture.generateMipmaps = false;
+colorTexture.minFilter = THREE.NearestFilter;
+colorTexture.magFilter = THREE.NearestFilter;
 
 // canvas
 const canvas = document.querySelector("canvas.webgl");
