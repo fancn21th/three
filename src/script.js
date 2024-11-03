@@ -21,6 +21,8 @@ const debugObject = {};
 const cubeTweaks = gui.addFolder("Awesome Threejs");
 
 // textures
+
+// texture loader
 const loadingManager = new THREE.LoadingManager();
 
 loadingManager.onStart = () => {
@@ -50,52 +52,53 @@ const geometry = new THREE.BufferGeometry();
 
 // vertex objects
 // count of triangles
-const count = 100;
+// const count = 100;
 
 // each triangle has 3 vertices
-const positionsArray = new Float32Array(count * 3 * 3);
+// const positionsArray = new Float32Array(count * 3 * 3);
 
-for (let i = 0; i < count * 3 * 3; i++) {
-  positionsArray[i] = Math.random() - 0.5;
-}
+// for (let i = 0; i < count * 3 * 3; i++) {
+//   positionsArray[i] = Math.random() - 0.5;
+// }
 
-const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
+// const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
 // for shader
-geometry.setAttribute("position", positionsAttribute);
+// geometry.setAttribute("position", positionsAttribute);
 
 // geometry object and its properties
-debugObject.color = "#00ff00";
+// debugObject.color = "#00ff00";
 
-const material = new THREE.MeshBasicMaterial({
-  color: debugObject.color,
-  wireframe: true,
-});
+// const material = new THREE.MeshBasicMaterial({
+//   color: debugObject.color,
+//   wireframe: true,
+// });
 
-const triangles = new THREE.Mesh(geometry, material);
+// const triangles = new THREE.Mesh(geometry, material);
 
-scene.add(triangles);
+// scene.add(triangles);
 
 // debug in range
-cubeTweaks.add(triangles.position, "y").min(-3).max(3).step(0.01).name("y");
+// cubeTweaks.add(triangles.position, "y").min(-3).max(3).step(0.01).name("y");
 
 // debug boolean
-cubeTweaks.add(material, "wireframe");
+// cubeTweaks.add(material, "wireframe");
 
 // debug object
-cubeTweaks.addColor(material, "color").onChange((value) => {
-  // print the color value for three.js color management
-  console.log(value.getHexString());
-  debugObject.color = value.getHexString();
-  material.color.set(debugObject.color);
-});
+// cubeTweaks.addColor(material, "color").onChange((value) => {
+//   // print the color value for three.js color management
+//   console.log(value.getHexString());
+//   debugObject.color = value.getHexString();
+//   material.color.set(debugObject.color);
+// });
 
-debugObject.spin = () => {
-  gsap.to(triangles.rotation, { y: triangles.rotation.y + Math.PI * 2 });
-};
+// debugObject.spin = () => {
+//   gsap.to(triangles.rotation, { y: triangles.rotation.y + Math.PI * 2 });
+// };
 
-cubeTweaks.add(debugObject, "spin");
+// cubeTweaks.add(debugObject, "spin");
 
 // another geometry box
+
 debugObject.subdivision = 6;
 
 const box = new THREE.Mesh(
@@ -103,8 +106,17 @@ const box = new THREE.Mesh(
   new THREE.MeshBasicMaterial({ map: texture })
 );
 
-box.position.x = 2;
+box.position.x = 0;
+box.position.y = 0;
+box.position.z = 0;
+
 scene.add(box);
+
+debugObject.spin = () => {
+  gsap.to(box.rotation, { y: box.rotation.y + Math.PI * 2 });
+};
+
+cubeTweaks.add(debugObject, "spin");
 
 cubeTweaks
   .add(debugObject, "subdivision")
@@ -186,7 +198,8 @@ camera.position.z = 3;
 
 // camera.position.set(2, 2, 2);
 
-camera.lookAt(triangles.position);
+// camera.lookAt(triangles.position);
+camera.lookAt(box.position);
 
 scene.add(camera);
 
